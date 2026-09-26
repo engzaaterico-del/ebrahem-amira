@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ebrahem & Amira | Wedding Invitation</title>
+  <title>Ebrahem & Amira | Engagement Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +37,6 @@
       position: relative;
     }
 
-    /* Falling Petals Effect */
     .petals-container {
       position: fixed;
       top: 0;
@@ -57,20 +56,11 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg) translateX(0);
-        opacity: 0.9;
-      }
-      50% {
-        transform: translateY(50vh) rotate(180deg) translateX(20px);
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg) translateX(-20px);
-        opacity: 0.1;
-      }
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.9; }
+      50% { transform: translateY(50vh) rotate(180deg) translateX(20px); }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0.1; }
     }
 
-    /* Audio Toggle Button */
     .audio-btn {
       position: fixed;
       top: 20px;
@@ -90,7 +80,6 @@
       font-size: 1.2rem;
     }
 
-    /* Welcome Overlay */
     .welcome-overlay {
       position: fixed;
       top: 0;
@@ -140,13 +129,7 @@
       letter-spacing: 2px;
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(138, 59, 78, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       animation: pulse 2s infinite;
-    }
-
-    .open-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(138, 59, 78, 0.4);
     }
 
     @keyframes pulse {
@@ -155,7 +138,6 @@
       100% { transform: scale(1); }
     }
 
-    /* Main Container */
     .wrapper {
       max-width: 500px;
       margin: 0 auto;
@@ -175,7 +157,6 @@
       height: 100px;
     }
 
-    /* Section Styles */
     .section-card {
       background: var(--card-bg);
       border: 1px solid rgba(212, 175, 55, 0.3);
@@ -230,7 +211,6 @@
       font-size: 1.2rem;
     }
 
-    /* Calendar Styling */
     .calendar-container {
       margin: 20px auto;
       max-width: 280px;
@@ -278,7 +258,6 @@
       color: var(--accent-color);
     }
 
-    /* Venue Button */
     .btn {
       display: inline-block;
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -291,13 +270,9 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       box-shadow: 0 4px 15px rgba(138, 59, 78, 0.25);
-      transition: all 0.3s ease;
       margin-top: 15px;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.35);
+      border: none;
+      cursor: pointer;
     }
 
     .venue-address {
@@ -312,33 +287,72 @@
       color: var(--text-color);
       margin-bottom: 15px;
     }
+
+    .wishes-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .wishes-input, .wishes-textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-color);
+      outline: none;
+    }
+
+    .wishes-list {
+      margin-top: 25px;
+      text-align: left;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .wish-card {
+      background: rgba(250, 245, 240, 0.8);
+      border-left: 3px solid var(--primary-color);
+      padding: 10px 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .wish-author {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      margin-bottom: 3px;
+    }
+
+    .wish-text {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Audio Controls -->
-  <button class="audio-btn" id="audioToggle" title="Toggle Music">🎵</button>
-  
-  <!-- Audio element using local file fallback or direct media stream -->
+  <button class="audio-btn" id="audioToggle">🎵</button>
   <audio id="weddingAudio" loop preload="auto">
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Floating Falling Petals -->
   <div class="petals-container" id="petals"></div>
 
-  <!-- Welcome Overlay -->
   <div class="welcome-overlay" id="welcomeOverlay">
-    <p>THE WEDDING OF</p>
+    <p>THE ENGAGEMENT OF</p>
     <h1>Ebrahem &amp; Amira</h1>
     <p>October 3, 2026</p>
     <button class="open-btn" id="openBtn">Open Invitation</button>
   </div>
 
-  <!-- Main Content Area -->
   <div class="wrapper">
-
-    <!-- Top Decorative Header -->
     <div class="header-branch">
       <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 50 Q 80 10 190 30" stroke="#8a3b4e" stroke-width="2" fill="none"/>
@@ -349,88 +363,62 @@
       </svg>
     </div>
 
-    <!-- Couple Names Card -->
-    <div class="section-card" id="coupleSection">
+    <div class="section-card">
       <div class="subtitle">Together With Their Families</div>
       <div class="couple-title">Ebrahem</div>
       <span class="ampersand">&amp;</span>
       <div class="couple-title">Amira</div>
       <div class="divider">❦</div>
       <p style="font-size: 0.9rem; line-height: 1.6; color: #666;">
-        We cordially invite you to share in our joy as we celebrate our wedding day.
+        We cordially invite you to share in our joy as we celebrate our engagement day.
       </p>
     </div>
 
-    <!-- Date & Calendar Card -->
     <div class="section-card">
       <div class="subtitle">Save The Date</div>
       <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary-color); font-weight: 600;">
         SATURDAY, OCTOBER 03, 2026
       </div>
-      
       <div class="calendar-container">
         <div class="calendar-header">October 2026</div>
         <div class="calendar-grid">
-          <div class="day-name">S</div>
-          <div class="day-name">M</div>
-          <div class="day-name">T</div>
-          <div class="day-name">W</div>
-          <div class="day-name">T</div>
-          <div class="day-name">F</div>
-          <div class="day-name">S</div>
-          
+          <div class="day-name">S</div><div class="day-name">M</div><div class="day-name">T</div><div class="day-name">W</div><div class="day-name">T</div><div class="day-name">F</div><div class="day-name">S</div>
           <div></div><div></div><div></div><div></div>
-          <div class="day-num">1</div>
-          <div class="day-num">2</div>
-          <div class="day-num highlight">3</div>
-          <div class="day-num">4</div>
-          <div class="day-num">5</div>
-          <div class="day-num">6</div>
-          <div class="day-num">7</div>
-          <div class="day-num">8</div>
-          <div class="day-num">9</div>
-          <div class="day-num">10</div>
-          <div class="day-num">11</div>
-          <div class="day-num">12</div>
-          <div class="day-num">13</div>
-          <div class="day-num">14</div>
-          <div class="day-num">15</div>
-          <div class="day-num">16</div>
-          <div class="day-num">17</div>
-          <div class="day-num">18</div>
-          <div class="day-num">19</div>
-          <div class="day-num">20</div>
-          <div class="day-num">21</div>
-          <div class="day-num">22</div>
-          <div class="day-num">23</div>
-          <div class="day-num">24</div>
-          <div class="day-num">25</div>
-          <div class="day-num">26</div>
-          <div class="day-num">27</div>
-          <div class="day-num">28</div>
-          <div class="day-num">29</div>
-          <div class="day-num">30</div>
-          <div class="day-num">31</div>
+          <div class="day-num">1</div><div class="day-num">2</div><div class="day-num highlight">3</div><div class="day-num">4</div><div class="day-num">5</div><div class="day-num">6</div><div class="day-num">7</div>
+          <div class="day-num">8</div><div class="day-num">9</div><div class="day-num">10</div><div class="day-num">11</div><div class="day-num">12</div><div class="day-num">13</div><div class="day-num">14</div>
+          <div class="day-num">15</div><div class="day-num">16</div><div class="day-num">17</div><div class="day-num">18</div><div class="day-num">19</div><div class="day-num">20</div><div class="day-num">21</div>
+          <div class="day-num">22</div><div class="day-num">23</div><div class="day-num">24</div><div class="day-num">25</div><div class="day-num">26</div><div class="day-num">27</div><div class="day-num">28</div>
+          <div class="day-num">29</div><div class="day-num">30</div><div class="day-num">31</div>
         </div>
       </div>
     </div>
 
-    <!-- Venue Location Card -->
-    <div class="section-card" id="venueSection">
-      <div class="subtitle">Wedding Reception Venue</div>
+    <div class="section-card">
+      <div class="subtitle">Engagement Reception Venue</div>
       <div class="venue-address">Villa Up</div>
       <div class="venue-city">Zagazig, Egypt</div>
       <div class="divider">❦</div>
       <a href="https://maps.app.goo.gl/LBE1grUikfTUhWBg9?g_st=ic" target="_blank" class="btn">View Location on Map</a>
     </div>
 
+    <div class="section-card">
+      <div class="subtitle">Send Best Wishes</div>
+      <form class="wishes-form" id="wishesForm">
+        <input type="text" id="guestName" class="wishes-input" placeholder="Your Name" required>
+        <textarea id="guestMessage" class="wishes-textarea" rows="3" placeholder="Write your warm wishes..." required></textarea>
+        <button type="submit" class="btn" id="submitBtn">Send Wishes</button>
+      </form>
+      <div class="wishes-list" id="wishesList"></div>
+    </div>
   </div>
 
   <script>
-    // Falling Petals Generator
+    // Live Firebase Endpoint
+    const FIREBASE_DB_URL = "https://ebrahem-amira-default-rtdb.firebaseio.com/wishes.json";
+
+    // Petals Generator
     const petalsContainer = document.getElementById('petals');
     const petalSymbols = ['🌸', '🌺', '✨', '🌸'];
-
     for (let i = 0; i < 22; i++) {
       const petal = document.createElement('div');
       petal.className = 'petal';
@@ -442,7 +430,7 @@
       petalsContainer.appendChild(petal);
     }
 
-    // Audio & Smooth Scroll Interactions
+    // Audio & Navigation Controls
     const welcomeOverlay = document.getElementById('welcomeOverlay');
     const openBtn = document.getElementById('openBtn');
     const weddingAudio = document.getElementById('weddingAudio');
@@ -453,36 +441,81 @@
       weddingAudio.play().then(() => {
         isPlaying = true;
         audioToggle.textContent = '🎵';
-      }).catch(err => {
-        console.log("Audio playback blocked or failed: ", err);
-      });
+      }).catch(err => console.log(err));
     }
 
     openBtn.addEventListener('click', () => {
-      // Hide overlay
       welcomeOverlay.classList.add('hidden');
-      
-      // Start audio
       playAudio();
-
-      // Smooth scroll down automatically
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }, 500);
+      setTimeout(() => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }, 500);
     });
 
     audioToggle.addEventListener('click', () => {
-      if (isPlaying) {
-        weddingAudio.pause();
-        isPlaying = false;
-        audioToggle.textContent = '🔇';
-      } else {
-        playAudio();
+      if (isPlaying) { weddingAudio.pause(); isPlaying = false; audioToggle.textContent = '🔇'; }
+      else { playAudio(); }
+    });
+
+    // Firebase Live Wishes Integration
+    const wishesForm = document.getElementById('wishesForm');
+    const guestName = document.getElementById('guestName');
+    const guestMessage = document.getElementById('guestMessage');
+    const wishesList = document.getElementById('wishesList');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    async function fetchWishes() {
+      try {
+        const res = await fetch(FIREBASE_DB_URL);
+        const data = await res.json();
+        if (data) {
+          const wishes = Object.values(data).reverse();
+          wishesList.innerHTML = wishes.map(w => `
+            <div class="wish-card">
+              <div class="wish-author">${escapeHtml(w.name)}</div>
+              <div class="wish-text">${escapeHtml(w.message)}</div>
+            </div>
+          `).join('');
+        } else {
+          wishesList.innerHTML = `<p style="font-size:0.85rem; color:#888;">Be the first to leave a wish!</p>`;
+        }
+      } catch (err) {
+        console.error("Error fetching wishes:", err);
+      }
+    }
+
+    wishesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = guestName.value.trim();
+      const message = guestMessage.value.trim();
+
+      if (name && message) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        
+        try {
+          await fetch(FIREBASE_DB_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, message, timestamp: Date.now() })
+          });
+          guestName.value = '';
+          guestMessage.value = '';
+          await fetchWishes();
+        } catch (err) {
+          alert("Failed to send wish. Please check database permissions.");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Wishes";
+        }
       }
     });
+
+    // Auto-fetch on load and poll every 5 seconds for live updates
+    fetchWishes();
+    setInterval(fetchWishes, 5000);
   </script>
 </body>
 </html>
