@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebrahem & Amira | Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #8a3b4e;
+      --accent-color: #d4af37;
+      --bg-color: #fdf8f5;
+      --text-color: #4a4a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating Petals Animation */
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -10%;
+      font-size: 1.2rem;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.2;
+      }
+    }
+
+    /* Card Container */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      padding: 40px 25px;
+      width: 90%;
+      max-width: 480px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(5px);
+      margin: 20px 0;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      border: 1px solid var(--accent-color);
+      border-radius: 10px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .header-subtitle {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .names {
+      font-family: 'Alex Brush', cursive;
+      font-size: 3.5rem;
+      color: var(--primary-color);
+      line-height: 1.2;
+      margin: 10px 0;
+    }
+
+    .ampersand {
+      display: block;
+      font-size: 2rem;
+      color: var(--accent-color);
+      margin: -5px 0;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      color: var(--accent-color);
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      height: 1px;
+      width: 50px;
+      background: var(--accent-color);
+      opacity: 0.5;
+      margin: 0 10px;
+    }
+
+    .date {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .invitation-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary-color), #a3485e);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 36px;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(138, 59, 78, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Falling Petals -->
+  <div class="petals-container" id="petals"></div>
+
+  <!-- Invitation Card -->
+  <div class="card">
+    <div class="header-subtitle">Together With Their Families</div>
+    
+    <div class="names">
+      Ebrahem
+      <span class="ampersand">&amp;</span>
+      Amira
+    </div>
+
+    <div class="divider">❦</div>
+
+    <div class="date">October 3, 2026</div>
+
+    <p class="invitation-text">
+      Cordially request the pleasure of your company<br>
+      to celebrate their wedding day.
+    </p>
+
+    <a href="https://maps.google.com" target="_blank" class="btn">View Location</a>
+  </div>
+
+  <script>
+    // Generate animated falling cherry blossom petals
+    const petalsContainer = document.getElementById('petals');
+    const petalIcons = ['🌸', '🌺', '✨'];
+
+    for (let i = 0; i < 20; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.textContent = petalIcons[Math.floor(Math.random() * petalIcons.length)];
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.animationDuration = `${5 + Math.random() * 5}s`;
+      petal.style.animationDelay = `${Math.random() * 5}s`;
+      petal.style.fontSize = `${0.8 + Math.random() * 0.8}rem`;
+      petalsContainer.appendChild(petal);
+    }
+  </script>
+</body>
+</html>
