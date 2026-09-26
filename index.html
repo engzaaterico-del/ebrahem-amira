@@ -413,7 +413,6 @@
   </div>
 
   <script>
-    // Live Firebase Endpoint
     const FIREBASE_DB_URL = "https://ebrahem-amira-default-rtdb.firebaseio.com/wishes.json";
 
     // Petals Generator
@@ -430,7 +429,7 @@
       petalsContainer.appendChild(petal);
     }
 
-    // Audio & Navigation Controls
+    // Audio Controls with Maximum Volume
     const welcomeOverlay = document.getElementById('welcomeOverlay');
     const openBtn = document.getElementById('openBtn');
     const weddingAudio = document.getElementById('weddingAudio');
@@ -438,21 +437,56 @@
     let isPlaying = false;
 
     function playAudio() {
+      weddingAudio.volume = 1.0; // Force maximum volume
       weddingAudio.play().then(() => {
         isPlaying = true;
         audioToggle.textContent = '🎵';
       }).catch(err => console.log(err));
     }
 
+    // Custom Gentle & Slow Smooth Scroll Function
+    function smoothScrollToBottom(duration) {
+      const startPosition = window.pageYOffset;
+      const targetPosition = document.body.scrollHeight - window.innerHeight;
+      const distance = targetPosition - startPosition;
+      let startTime = null;
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+
+      function easeInOutQuad(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+      }
+
+      requestAnimationFrame(animation);
+    }
+
     openBtn.addEventListener('click', () => {
       welcomeOverlay.classList.add('hidden');
       playAudio();
-      setTimeout(() => { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }, 500);
+      
+      // Delay slightly, then smoothly scroll down over 4 seconds (4000ms)
+      setTimeout(() => {
+        smoothScrollToBottom(4000);
+      }, 600);
     });
 
     audioToggle.addEventListener('click', () => {
-      if (isPlaying) { weddingAudio.pause(); isPlaying = false; audioToggle.textContent = '🔇'; }
-      else { playAudio(); }
+      if (isPlaying) { 
+        weddingAudio.pause(); 
+        isPlaying = false; 
+        audioToggle.textContent = '🔇'; 
+      } else { 
+        playAudio(); 
+      }
     });
 
     // Firebase Live Wishes Integration
@@ -513,7 +547,6 @@
       }
     });
 
-    // Auto-fetch on load and poll every 5 seconds for live updates
     fetchWishes();
     setInterval(fetchWishes, 5000);
   </script>
