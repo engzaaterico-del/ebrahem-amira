@@ -319,8 +319,9 @@
   <!-- Audio Controls -->
   <button class="audio-btn" id="audioToggle" title="Toggle Music">🎵</button>
   
+  <!-- Audio element using local file fallback or direct media stream -->
   <audio id="weddingAudio" loop preload="auto">
-    <source src="https://ia801509.us.archive.org/24/items/zaffah-om-kalthoum/zaffah.mp3" type="audio/mpeg">
+    <source src="song.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Floating Falling Petals -->
@@ -453,7 +454,7 @@
         isPlaying = true;
         audioToggle.textContent = '🎵';
       }).catch(err => {
-        console.log("Audio playback error: ", err);
+        console.log("Audio playback blocked or failed: ", err);
       });
     }
 
