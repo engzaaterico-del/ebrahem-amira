@@ -6,14 +6,16 @@
   <title>Ebrahem & Amira | Wedding Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
       --primary-color: #8a3b4e;
+      --secondary-color: #ba6b7c;
       --accent-color: #d4af37;
-      --bg-color: #fdf8f5;
+      --bg-color: #faf5f0;
       --text-color: #4a4a4a;
+      --card-bg: rgba(255, 255, 255, 0.92);
     }
 
     * {
@@ -22,19 +24,20 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Floating Petals Animation */
+    /* Falling Petals Effect */
     .petals-container {
       position: fixed;
       top: 0;
@@ -42,178 +45,443 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 10;
       overflow: hidden;
     }
 
     .petal {
       position: absolute;
       top: -10%;
-      font-size: 1.2rem;
       user-select: none;
       animation: fall linear infinite;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) rotate(0deg) translateX(0);
         opacity: 0.9;
       }
+      50% {
+        transform: translateY(50vh) rotate(180deg) translateX(20px);
+      }
       100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0.2;
+        transform: translateY(110vh) rotate(360deg) translateX(-20px);
+        opacity: 0.1;
       }
     }
 
-    /* Card Container */
-    .card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-      border-radius: 16px;
-      padding: 40px 25px;
-      width: 90%;
-      max-width: 480px;
+    /* Audio Toggle Button */
+    .audio-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--accent-color);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(5px);
+      font-size: 1.2rem;
+    }
+
+    /* Welcome Overlay */
+    .welcome-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(250, 245, 240, 0.98);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .welcome-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-overlay h1 {
+      font-family: 'Alex Brush', cursive;
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .welcome-overlay p {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      margin-bottom: 30px;
+    }
+
+    .open-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .open-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(138, 59, 78, 0.4);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    /* Main Container */
+    .wrapper {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 15px 60px;
       position: relative;
       z-index: 2;
-      backdrop-filter: blur(5px);
-      margin: 20px 0;
     }
 
-    .card::before {
+    .header-branch {
+      width: 100%;
+      text-align: center;
+      margin-bottom: -30px;
+    }
+
+    .header-branch svg {
+      width: 250px;
+      height: 100px;
+    }
+
+    /* Section Styles */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px;
+      padding: 35px 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      backdrop-filter: blur(5px);
+      position: relative;
+    }
+
+    .section-card::before {
       content: '';
       position: absolute;
-      top: 12px;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      border: 1px solid var(--accent-color);
-      border-radius: 10px;
+      top: 10px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
       pointer-events: none;
-      opacity: 0.5;
     }
 
-    .header-subtitle {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      color: var(--primary-color);
-      margin-bottom: 15px;
-    }
-
-    .names {
+    .couple-title {
       font-family: 'Alex Brush', cursive;
-      font-size: 3.5rem;
+      font-size: 3.8rem;
       color: var(--primary-color);
       line-height: 1.2;
-      margin: 10px 0;
     }
 
     .ampersand {
       display: block;
-      font-size: 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
       color: var(--accent-color);
-      margin: -5px 0;
+      margin: 5px 0;
+    }
+
+    .subtitle {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
     }
 
     .divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 20px 0;
+      color: var(--accent-color);
+      margin: 15px 0;
+      font-size: 1.2rem;
+    }
+
+    /* Calendar Styling */
+    .calendar-container {
+      margin: 20px auto;
+      max-width: 280px;
+    }
+
+    .calendar-header {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      font-size: 0.85rem;
+    }
+
+    .day-name {
+      font-weight: 600;
+      color: var(--secondary-color);
+      padding-bottom: 5px;
+    }
+
+    .day-num {
+      padding: 6px 0;
+      border-radius: 50%;
+    }
+
+    .day-num.highlight {
+      background-color: var(--primary-color);
+      color: #fff;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .day-num.highlight::after {
+      content: '♥';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      font-size: 0.7rem;
       color: var(--accent-color);
     }
 
-    .divider::before, .divider::after {
-      content: '';
-      height: 1px;
-      width: 50px;
-      background: var(--accent-color);
-      opacity: 0.5;
-      margin: 0 10px;
-    }
-
-    .date {
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--primary-color);
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-    }
-
-    .invitation-text {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #666;
-      margin-bottom: 30px;
-    }
-
+    /* Venue Button */
     .btn {
       display: inline-block;
-      background: linear-gradient(135deg, var(--primary-color), #a3485e);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #fff;
       text-decoration: none;
-      padding: 12px 36px;
+      padding: 12px 30px;
       border-radius: 30px;
       font-family: 'Cinzel', serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(138, 59, 78, 0.3);
+      box-shadow: 0 4px 15px rgba(138, 59, 78, 0.25);
       transition: all 0.3s ease;
+      margin-top: 15px;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.4);
+      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.35);
+    }
+
+    .venue-address {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 10px 0 5px;
+    }
+
+    .venue-city {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Audio Controls -->
+  <button class="audio-btn" id="audioToggle" title="Toggle Music">🎵</button>
+  
+  <audio id="weddingAudio" loop preload="auto">
+    <source src="https://ia801509.us.archive.org/24/items/zaffah-om-kalthoum/zaffah.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- Floating Falling Petals -->
   <div class="petals-container" id="petals"></div>
 
-  <!-- Invitation Card -->
-  <div class="card">
-    <div class="header-subtitle">Together With Their Families</div>
-    
-    <div class="names">
-      Ebrahem
-      <span class="ampersand">&amp;</span>
-      Amira
+  <!-- Welcome Overlay -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <p>THE WEDDING OF</p>
+    <h1>Ebrahem &amp; Amira</h1>
+    <p>October 3, 2026</p>
+    <button class="open-btn" id="openBtn">Open Invitation</button>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="wrapper">
+
+    <!-- Top Decorative Header -->
+    <div class="header-branch">
+      <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 50 Q 80 10 190 30" stroke="#8a3b4e" stroke-width="2" fill="none"/>
+        <circle cx="50" cy="28" r="6" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="90" cy="18" r="8" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="130" cy="20" r="7" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="160" cy="25" r="5" fill="#ba6b7c" opacity="0.8"/>
+      </svg>
     </div>
 
-    <div class="divider">❦</div>
+    <!-- Couple Names Card -->
+    <div class="section-card" id="coupleSection">
+      <div class="subtitle">Together With Their Families</div>
+      <div class="couple-title">Ebrahem</div>
+      <span class="ampersand">&amp;</span>
+      <div class="couple-title">Amira</div>
+      <div class="divider">❦</div>
+      <p style="font-size: 0.9rem; line-height: 1.6; color: #666;">
+        We cordially invite you to share in our joy as we celebrate our wedding day.
+      </p>
+    </div>
 
-    <div class="date">October 3, 2026</div>
+    <!-- Date & Calendar Card -->
+    <div class="section-card">
+      <div class="subtitle">Save The Date</div>
+      <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary-color); font-weight: 600;">
+        SATURDAY, OCTOBER 03, 2026
+      </div>
+      
+      <div class="calendar-container">
+        <div class="calendar-header">October 2026</div>
+        <div class="calendar-grid">
+          <div class="day-name">S</div>
+          <div class="day-name">M</div>
+          <div class="day-name">T</div>
+          <div class="day-name">W</div>
+          <div class="day-name">T</div>
+          <div class="day-name">F</div>
+          <div class="day-name">S</div>
+          
+          <div></div><div></div><div></div><div></div>
+          <div class="day-num">1</div>
+          <div class="day-num">2</div>
+          <div class="day-num highlight">3</div>
+          <div class="day-num">4</div>
+          <div class="day-num">5</div>
+          <div class="day-num">6</div>
+          <div class="day-num">7</div>
+          <div class="day-num">8</div>
+          <div class="day-num">9</div>
+          <div class="day-num">10</div>
+          <div class="day-num">11</div>
+          <div class="day-num">12</div>
+          <div class="day-num">13</div>
+          <div class="day-num">14</div>
+          <div class="day-num">15</div>
+          <div class="day-num">16</div>
+          <div class="day-num">17</div>
+          <div class="day-num">18</div>
+          <div class="day-num">19</div>
+          <div class="day-num">20</div>
+          <div class="day-num">21</div>
+          <div class="day-num">22</div>
+          <div class="day-num">23</div>
+          <div class="day-num">24</div>
+          <div class="day-num">25</div>
+          <div class="day-num">26</div>
+          <div class="day-num">27</div>
+          <div class="day-num">28</div>
+          <div class="day-num">29</div>
+          <div class="day-num">30</div>
+          <div class="day-num">31</div>
+        </div>
+      </div>
+    </div>
 
-    <p class="invitation-text">
-      Cordially request the pleasure of your company<br>
-      to celebrate their wedding day.
-    </p>
+    <!-- Venue Location Card -->
+    <div class="section-card" id="venueSection">
+      <div class="subtitle">Wedding Reception Venue</div>
+      <div class="venue-address">Villa Up</div>
+      <div class="venue-city">Zagazig, Egypt</div>
+      <div class="divider">❦</div>
+      <a href="https://maps.app.goo.gl/LBE1grUikfTUhWBg9?g_st=ic" target="_blank" class="btn">View Location on Map</a>
+    </div>
 
-    <a href="https://maps.google.com" target="_blank" class="btn">View Location</a>
   </div>
 
   <script>
-    // Generate animated falling cherry blossom petals
+    // Falling Petals Generator
     const petalsContainer = document.getElementById('petals');
-    const petalIcons = ['🌸', '🌺', '✨'];
+    const petalSymbols = ['🌸', '🌺', '✨', '🌸'];
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 22; i++) {
       const petal = document.createElement('div');
       petal.className = 'petal';
-      petal.textContent = petalIcons[Math.floor(Math.random() * petalIcons.length)];
+      petal.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
       petal.style.left = `${Math.random() * 100}%`;
-      petal.style.animationDuration = `${5 + Math.random() * 5}s`;
+      petal.style.animationDuration = `${6 + Math.random() * 6}s`;
       petal.style.animationDelay = `${Math.random() * 5}s`;
-      petal.style.fontSize = `${0.8 + Math.random() * 0.8}rem`;
+      petal.style.fontSize = `${0.8 + Math.random() * 0.7}rem`;
       petalsContainer.appendChild(petal);
     }
+
+    // Audio & Smooth Scroll Interactions
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const openBtn = document.getElementById('openBtn');
+    const weddingAudio = document.getElementById('weddingAudio');
+    const audioToggle = document.getElementById('audioToggle');
+    let isPlaying = false;
+
+    function playAudio() {
+      weddingAudio.play().then(() => {
+        isPlaying = true;
+        audioToggle.textContent = '🎵';
+      }).catch(err => {
+        console.log("Audio playback error: ", err);
+      });
+    }
+
+    openBtn.addEventListener('click', () => {
+      // Hide overlay
+      welcomeOverlay.classList.add('hidden');
+      
+      // Start audio
+      playAudio();
+
+      // Smooth scroll down automatically
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 500);
+    });
+
+    audioToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        weddingAudio.pause();
+        isPlaying = false;
+        audioToggle.textContent = '🔇';
+      } else {
+        playAudio();
+      }
+    });
   </script>
 </body>
 </html>
