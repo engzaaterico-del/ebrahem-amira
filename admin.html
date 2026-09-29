@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ebrahem & Amira | Guest Wishes Manager</title>
+  <title>Ebrahem & Amira | Engagement Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -15,7 +15,7 @@
       --accent-color: #d4af37;
       --bg-color: #faf5f0;
       --text-color: #4a4a4a;
-      --danger-color: #d9534f;
+      --card-bg: rgba(255, 255, 255, 0.92);
     }
 
     * {
@@ -28,274 +28,473 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       font-family: 'Montserrat', sans-serif;
-      padding: 30px 15px;
       min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      overflow: hidden;
     }
 
-    header {
+    .petal {
+      position: absolute;
+      top: -10%;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.9; }
+      50% { transform: translateY(50vh) rotate(180deg) translateX(20px); }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0.1; }
+    }
+
+    .audio-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--accent-color);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(5px);
+      font-size: 1.2rem;
+    }
+
+    .welcome-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(250, 245, 240, 0.98);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .welcome-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-overlay h1 {
+      font-family: 'Alex Brush', cursive;
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .welcome-overlay p {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+      color: var(--text-color);
       margin-bottom: 30px;
     }
 
-    h1 {
-      font-family: 'Cinzel', serif;
-      color: var(--primary-color);
-      font-size: 1.8rem;
-      margin-bottom: 5px;
-    }
-
-    p.subtitle {
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #fff;
-      padding: 15px 20px;
-      border-radius: 10px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    }
-
-    .stat-count {
-      font-weight: 600;
-      color: var(--primary-color);
-    }
-
-    .refresh-btn {
-      background: transparent;
-      border: 1px solid var(--primary-color);
-      color: var(--primary-color);
-      padding: 6px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .refresh-btn:hover {
-      background: var(--primary-color);
+    .open-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #fff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(138, 59, 78, 0.3);
+      animation: pulse 2s infinite;
     }
 
-    .wishes-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
 
-    .card {
-      background: #fff;
-      border-radius: 12px;
+    .wrapper {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 15px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-branch {
+      width: 100%;
+      text-align: center;
+      margin-bottom: -30px;
+    }
+
+    .header-branch svg {
+      width: 250px;
+      height: 100px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
       border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      border-radius: 16px;
+      padding: 35px 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      backdrop-filter: blur(5px);
+      position: relative;
     }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .section-card::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      pointer-events: none;
     }
 
-    .author-name {
+    .couple-title {
+      font-family: 'Alex Brush', cursive;
+      font-size: 3.8rem;
+      color: var(--primary-color);
+      line-height: 1.2;
+    }
+
+    .ampersand {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin: 5px 0;
+    }
+
+    .subtitle {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    .divider {
+      color: var(--accent-color);
+      margin: 15px 0;
+      font-size: 1.2rem;
+    }
+
+    .calendar-container {
+      margin: 20px auto;
+      max-width: 280px;
+    }
+
+    .calendar-header {
+      font-family: 'Cinzel', serif;
       font-weight: 600;
       color: var(--primary-color);
-      font-size: 1rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
     }
 
-    .timestamp {
-      font-size: 0.75rem;
-      color: #999;
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      font-size: 0.85rem;
     }
 
-    .edit-input, .edit-textarea {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--text-color);
+    .day-name {
+      font-weight: 600;
+      color: var(--secondary-color);
+      padding-bottom: 5px;
     }
 
-    .edit-textarea {
-      resize: vertical;
-      min-height: 60px;
+    .day-num {
+      padding: 6px 0;
+      border-radius: 50%;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      margin-top: 5px;
+    .day-num.highlight {
+      background-color: var(--primary-color);
+      color: #fff;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .day-num.highlight::after {
+      content: '♥';
+      position: absolute;
+      top: -8px;
+      right: -2px;
+      font-size: 0.7rem;
+      color: var(--accent-color);
     }
 
     .btn {
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: none;
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
       font-size: 0.85rem;
-      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(138, 59, 78, 0.25);
+      margin-top: 15px;
+      border: none;
       cursor: pointer;
-      transition: opacity 0.2s;
     }
 
-    .btn:hover {
-      opacity: 0.85;
+    .venue-address {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 10px 0 5px;
     }
 
-    .btn-save {
-      background-color: var(--primary-color);
-      color: #fff;
+    .venue-city {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      margin-bottom: 15px;
     }
 
-    .btn-delete {
-      background-color: var(--danger-color);
-      color: #fff;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px;
+    .closed-notice {
+      font-size: 0.85rem;
       color: #888;
-      background: #fff;
-      border-radius: 12px;
+      font-style: italic;
+      margin-top: 10px;
+    }
+
+    .wishes-list {
+      margin-top: 15px;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .wish-card {
+      background: rgba(250, 245, 240, 0.8);
+      border-left: 3px solid var(--primary-color);
+      padding: 10px 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .wish-author {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      margin-bottom: 3px;
+    }
+
+    .wish-text {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Guest Wishes Manager</h1>
-      <p class="subtitle">Ebrahem & Amira Engagement</p>
-    </header>
+  <button class="audio-btn" id="audioToggle">🎵</button>
+  <audio id="weddingAudio" loop preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
 
-    <div class="stats-bar">
-      <div>Total Wishes: <span class="stat-count" id="totalCount">0</span></div>
-      <button class="refresh-btn" onclick="fetchWishes()">🔄 Refresh</button>
+  <div class="petals-container" id="petals"></div>
+
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <p>THE ENGAGEMENT OF</p>
+    <h1>Ebrahem &amp; Amira</h1>
+    <p>October 3, 2026</p>
+    <button class="open-btn" id="openBtn">Open Invitation</button>
+  </div>
+
+  <div class="wrapper">
+    <div class="header-branch">
+      <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 50 Q 80 10 190 30" stroke="#8a3b4e" stroke-width="2" fill="none"/>
+        <circle cx="50" cy="28" r="6" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="90" cy="18" r="8" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="130" cy="20" r="7" fill="#ba6b7c" opacity="0.8"/>
+        <circle cx="160" cy="25" r="5" fill="#ba6b7c" opacity="0.8"/>
+      </svg>
     </div>
 
-    <div class="wishes-grid" id="wishesContainer">
-      <div class="empty-state">Loading guest wishes...</div>
+    <div class="section-card">
+      <div class="subtitle">Together With Their Families</div>
+      <div class="couple-title">Ebrahem</div>
+      <span class="ampersand">&amp;</span>
+      <div class="couple-title">Amira</div>
+      <div class="divider">❦</div>
+      <p style="font-size: 0.9rem; line-height: 1.6; color: #666;">
+        We cordially invite you to share in our joy as we celebrate our engagement day.
+      </p>
+    </div>
+
+    <div class="section-card">
+      <div class="subtitle">Save The Date</div>
+      <div style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--primary-color); font-weight: 600;">
+        SATURDAY, OCTOBER 03, 2026
+      </div>
+      <div class="calendar-container">
+        <div class="calendar-header">October 2026</div>
+        <div class="calendar-grid">
+          <div class="day-name">S</div><div class="day-name">M</div><div class="day-name">T</div><div class="day-name">W</div><div class="day-name">T</div><div class="day-name">F</div><div class="day-name">S</div>
+          <div></div><div></div><div></div><div></div>
+          <div class="day-num">1</div><div class="day-num">2</div><div class="day-num highlight">3</div><div class="day-num">4</div><div class="day-num">5</div><div class="day-num">6</div><div class="day-num">7</div>
+          <div class="day-num">8</div><div class="day-num">9</div><div class="day-num">10</div><div class="day-num">11</div><div class="day-num">12</div><div class="day-num">13</div><div class="day-num">14</div>
+          <div class="day-num">15</div><div class="day-num">16</div><div class="day-num">17</div><div class="day-num">18</div><div class="day-num">19</div><div class="day-num">20</div><div class="day-num">21</div>
+          <div class="day-num">22</div><div class="day-num">23</div><div class="day-num">24</div><div class="day-num">25</div><div class="day-num">26</div><div class="day-num">27</div><div class="day-num">28</div>
+          <div class="day-num">29</div><div class="day-num">30</div><div class="day-num">31</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="subtitle">Engagement Reception Venue</div>
+      <div class="venue-address">Villa Up</div>
+      <div class="venue-city">Zagazig, Egypt</div>
+      <div class="divider">❦</div>
+      <a href="https://maps.app.goo.gl/LBE1grUikfTUhWBg9?g_st=ic" target="_blank" class="btn">View Location on Map</a>
+    </div>
+
+    <div class="section-card">
+      <div class="subtitle">Warm Wishes</div>
+      <p class="closed-notice">New wishes are now closed.</p>
+      <div class="wishes-list" id="wishesList"></div>
     </div>
   </div>
 
   <script>
-    const FIREBASE_BASE_URL = "https://ebrahem-amira-default-rtdb.firebaseio.com/wishes";
+    const FIREBASE_DB_URL = "https://ebrahem-amira-default-rtdb.firebaseio.com/wishes.json";
 
-    async function fetchWishes() {
-      const container = document.getElementById('wishesContainer');
-      const totalCount = document.getElementById('totalCount');
-
-      try {
-        const res = await fetch(`${FIREBASE_BASE_URL}.json`);
-        const data = await res.json();
-
-        if (!data) {
-          container.innerHTML = `<div class="empty-state">No wishes found in the database.</div>`;
-          totalCount.textContent = 0;
-          return;
-        }
-
-        const keys = Object.keys(data).reverse();
-        totalCount.textContent = keys.length;
-
-        container.innerHTML = keys.map(id => {
-          const wish = data[id];
-          const dateStr = wish.timestamp ? new Date(wish.timestamp).toLocaleString() : '';
-
-          return `
-            <div class="card" id="card-${id}">
-              <div class="card-header">
-                <span class="timestamp">${dateStr}</span>
-              </div>
-              <div>
-                <label style="font-size: 0.75rem; color: #777;">Guest Name:</label>
-                <input type="text" class="edit-input" id="name-${id}" value="${escapeHtml(wish.name || '')}">
-              </div>
-              <div>
-                <label style="font-size: 0.75rem; color: #777;">Message:</label>
-                <textarea class="edit-textarea" id="msg-${id}">${escapeHtml(wish.message || '')}</textarea>
-              </div>
-              <div class="card-actions">
-                <button class="btn btn-save" onclick="updateWish('${id}')">Save Changes</button>
-                <button class="btn btn-delete" onclick="deleteWish('${id}')">Delete</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-      } catch (err) {
-        console.error("Fetch error:", err);
-        container.innerHTML = `<div class="empty-state" style="color:red;">Error loading wishes. Please check your internet or Firebase permissions.</div>`;
-      }
+    // Petals Generator
+    const petalsContainer = document.getElementById('petals');
+    const petalSymbols = ['🌸', '🌺', '✨', '🌸'];
+    for (let i = 0; i < 22; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.animationDuration = `${6 + Math.random() * 6}s`;
+      petal.style.animationDelay = `${Math.random() * 5}s`;
+      petal.style.fontSize = `${0.8 + Math.random() * 0.7}rem`;
+      petalsContainer.appendChild(petal);
     }
 
-    async function updateWish(id) {
-      const newName = document.getElementById(`name-${id}`).value.trim();
-      const newMsg = document.getElementById(`msg-${id}`).value.trim();
+    // Audio Controls
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const openBtn = document.getElementById('openBtn');
+    const weddingAudio = document.getElementById('weddingAudio');
+    const audioToggle = document.getElementById('audioToggle');
+    let isPlaying = false;
 
-      if (!newName || !newMsg) {
-        alert("Name and message cannot be empty.");
-        return;
-      }
-
-      try {
-        const res = await fetch(`${FIREBASE_BASE_URL}/${id}.json`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: newName, message: newMsg })
-        });
-
-        if (res.ok) {
-          alert("Wish updated successfully!");
-        } else {
-          alert("Failed to update wish.");
-        }
-      } catch (err) {
-        alert("Error connecting to database.");
-      }
+    function playAudio() {
+      weddingAudio.volume = 1.0;
+      weddingAudio.play().then(() => {
+        isPlaying = true;
+        audioToggle.textContent = '🎵';
+      }).catch(err => console.log(err));
     }
 
-    async function deleteWish(id) {
-      if (!confirm("Are you sure you want to delete this wish?")) return;
+    // Mobile Slow Scroll
+    function mobileSlowScroll(duration) {
+      const start = window.pageYOffset || document.documentElement.scrollTop;
+      const target = Math.max(
+        document.body.scrollHeight, 
+        document.documentElement.scrollHeight
+      ) - window.innerHeight;
+      const distance = target - start;
+      let startTime = null;
 
-      try {
-        const res = await fetch(`${FIREBASE_BASE_URL}/${id}.json`, {
-          method: 'DELETE'
-        });
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = timestamp - startTime;
+        const percentage = Math.min(progress / duration, 1);
+        
+        window.scrollTo(0, start + distance * percentage);
 
-        if (res.ok) {
-          document.getElementById(`card-${id}`).remove();
-          const countEl = document.getElementById('totalCount');
-          countEl.textContent = Math.max(0, parseInt(countEl.textContent) - 1);
-        } else {
-          alert("Failed to delete wish.");
+        if (progress < duration) {
+          window.requestAnimationFrame(step);
         }
-      } catch (err) {
-        alert("Error connecting to database.");
       }
+
+      window.requestAnimationFrame(step);
     }
+
+    openBtn.addEventListener('click', () => {
+      welcomeOverlay.classList.add('hidden');
+      playAudio();
+      
+      setTimeout(() => {
+        mobileSlowScroll(6000);
+      }, 500);
+    });
+
+    audioToggle.addEventListener('click', () => {
+      if (isPlaying) { 
+        weddingAudio.pause(); 
+        isPlaying = false; 
+        audioToggle.textContent = '🔇'; 
+      } else { 
+        playAudio(); 
+      }
+    });
+
+    // Read-only Firebase Wishes fetcher
+    const wishesList = document.getElementById('wishesList');
 
     function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // Initial fetch on page load
+    async function fetchWishes() {
+      try {
+        const res = await fetch(FIREBASE_DB_URL);
+        const data = await res.json();
+        if (data) {
+          const wishes = Object.values(data).reverse();
+          wishesList.innerHTML = wishes.map(w => `
+            <div class="wish-card">
+              <div class="wish-author">${escapeHtml(w.name)}</div>
+              <div class="wish-text">${escapeHtml(w.message)}</div>
+            </div>
+          `).join('');
+        } else {
+          wishesList.innerHTML = `<p style="font-size:0.85rem; color:#888; text-align:center;">No wishes recorded yet.</p>`;
+        }
+      } catch (err) {
+        console.error("Error fetching wishes:", err);
+      }
+    }
+
     fetchWishes();
   </script>
 </body>
